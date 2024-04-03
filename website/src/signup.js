@@ -1,21 +1,23 @@
 import React, { useState, useContext } from 'react';
 import { AccountContext } from './App';
 
-const Login = ({ setShowLogin, setShowSignup, setLoggedIn }) => {
+const Signup = ({ setShowLogin, setShowSignup, setLoggedIn }) => {
 
     const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const { accountId, setAccountId } = useContext(AccountContext);
 
     const handleSubmit = async (event) => {
-        
+
         event.preventDefault();
 
-        const url = 'http://localhost:8080/accounts/login';
+        const url = 'http://localhost:8080/accounts/signup';
 
         const data = {
             "name":username,
+            "email":email,
             "pass":password
         };
 
@@ -31,7 +33,7 @@ const Login = ({ setShowLogin, setShowSignup, setLoggedIn }) => {
 
         if (response.ok) {
             setAccountId(responseData.id);
-            setShowLogin(false);
+            setShowSignup(false);
             setLoggedIn(true);
         } else {
             alert(responseData.message);
@@ -39,30 +41,33 @@ const Login = ({ setShowLogin, setShowSignup, setLoggedIn }) => {
 
     };
 
-    const handleCreate = () => {
-        setShowSignup(true);
-        setShowLogin(false);
+    const handleLogin = () => {
+        setShowLogin(true);
+        setShowSignup(false);
     }
 
     return (
         <div>
-            <h2>Login Page</h2>
+            <h2>Signup Page</h2>
             <form onSubmit={handleSubmit}>
                 <label>
                     Username:
                     <input type="text" name="username" value={username} onChange={e => setUsername(e.target.value)} />
                 </label>
                 <label>
+                    Email:
+                    <input type="email" name="email" value={email} onChange={e => setEmail(e.target.value)} />
+                </label>
+                <label>
                     Password:
                     <input type="password" name="password" value={password} onChange={e => setPassword(e.target.value)} />
                 </label>
-                <input type="submit" value="Login"/>
+                <input type="submit" value="Signup" />
             </form>
 
-            <button id="create" type='button' onClick={handleCreate}>Create an Account</button>
-
+            <button id="login" type='button' onClick={handleLogin}>Back to Login</button>
         </div>
     );
 }
 
-export default Login;
+export default Signup;
