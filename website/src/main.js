@@ -1,11 +1,15 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { AccountContext } from './App';
 
-const Main = () => {
+import Upload from './upload';
+
+const Main = ({ setShowLogin, setShowSignup, setLoggedIn }) => {
 
     const { accountId, setAccountId } = useContext(AccountContext);
 
-    const loadImages = async (event) => {
+    const [showUpload, setShowUpload] = useState(false);
+
+    async function loadImages(event) {
 
         const url = 'http://localhost:8080/pictures';
 
@@ -19,21 +23,74 @@ const Main = () => {
             headers: {
                 'Content-Type':'application/json'
             }
-            // body: JSON.stringify(data)
         });
 
         const responseData = await response.json();
 
+        let div = document.getElementById('imageArea');
+
+        while (div.lastElementChild) {
+            div.removeChild(div.lastElementChild);
+        }
+
+        const format = new Intl.DateTimeFormat(('en-US', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            timeZone: 'UTC'
+        }));
+
+        for (let j = 0; j < responseData.length; j++) {
+
+            const date = new Date(responseData[j].upload);
+
+
+            let i = document.createElement('div');
+            i.innerHTML = `
+                <p>${responseData[j].userID}: ${format.format(date)}</p>
+            `;
+            div.append(i);
+        }
+
     
     };
 
+    const logout = () => {
+        setAccountId(null);
+        setShowLogin(true);
+        setLoggedIn(false);
+    };
+
+    const upload = () => {
+        setShowUpload(!showUpload);
+    }
+
     useEffect(() => {
-        loadImages();
+        // loadImages();
     }, []);
 
     return (
         <div>
-            {/* {loadImages} */}
+
+            <button type='button' onClick={logout}>Logout</button>
+
+            {showUpload && (
+                <div>
+                    <button type='button' onClick={upload}>Cancel Upload</button>
+                    <Upload />
+                </div>
+            )}
+
+            {!showUpload && (
+                <button type='button' onClick={upload}>Upload Image</button>
+            )}
+
+            {/* {loadImages()} */}
+            <div id="imageArea">
+
+            </div>
         </div>
     );
 

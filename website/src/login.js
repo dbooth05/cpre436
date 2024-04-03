@@ -44,6 +44,10 @@ const Login = ({ setShowLogin, setShowSignup, setLoggedIn }) => {
         setShowLogin(false);
     }
 
+    const back = () => {
+        setShowLogin(false);
+    }
+
     return (
         <div>
             <h2>Login Page</h2>
@@ -60,6 +64,7 @@ const Login = ({ setShowLogin, setShowSignup, setLoggedIn }) => {
             </form>
 
             <button id="create" type='button' onClick={handleCreate}>Create an Account</button>
+            <button id="back" type='back' onClick={back}>Back</button>
 
         </div>
     );

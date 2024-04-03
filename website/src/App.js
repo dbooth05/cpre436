@@ -10,13 +10,15 @@ import Main from './main';
 export const AccountContext = createContext();
 
 const App = () => {
-  // <Login />
-  // <Signup />
 
     const [accountId, setAccountId] = useState(null);
     const [loggedIn, setLoggedIn] = useState(false);
-    const [showLogin, setShowLogin] = useState(true);
+    const [showLogin, setShowLogin] = useState(false);
     const [showSignup, setShowSignup] = useState(false);
+
+    const login = () => {
+        setShowLogin(!showLogin);
+    }
 
     return (
 
@@ -27,6 +29,15 @@ const App = () => {
                     <h1>Photoshare</h1>
                     <h2>Class: PHOTO  436X</h2>
                 </header>
+
+                {!showLogin && !loggedIn && (
+                    <div>
+                        <h2>Welcome to Photoshare</h2>
+                        <p>Please Login to access class: PHOTO 436X</p>
+
+                        <button type='button' onClick={login}>Login</button>
+                    </div>
+                )}
 
                 {/* Show login page */}
                 {showLogin && (
@@ -44,7 +55,7 @@ const App = () => {
                 )}
 
                 <footer>
-                    <p>&copy; CPRE 436X - dbooth 2024</p>
+                    <p>&copy; CPRE 436X - dbooth05 2024</p>
                 </footer>
 
         </Router>
