@@ -16,6 +16,8 @@ repositories {
 }
 
 dependencies {
+    compile 'org.springframework:spring-context:3.2.4.RELEASE'
+
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -29,7 +31,4 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
-bootJar {
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    mainClass = 'com.example.backend_spring.BackendSpringApplication'
-}
+
