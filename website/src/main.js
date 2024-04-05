@@ -44,12 +44,12 @@ const Main = ({ setShowLogin, setShowSignup, setLoggedIn }) => {
 
         for (let j = 0; j < responseData.length; j++) {
 
-            const date = new Date(responseData[j].upload);
+            // const date = new Date(responseData[j].upload);
 
 
             let i = document.createElement('div');
             i.innerHTML = `
-                <p>${responseData[j].userID}: ${format.format(date)}</p>
+                <p>${responseData[j].userID}: ${responseData[j].uploaded}: ${responseData[j].imgPath}</p>
             `;
             div.append(i);
         }
@@ -67,8 +67,10 @@ const Main = ({ setShowLogin, setShowSignup, setLoggedIn }) => {
         setShowUpload(!showUpload);
     }
 
+    // TODO fix the show upload, migrate to upload.js file
+
     useEffect(() => {
-        // loadImages();
+        loadImages();
     }, []);
 
     return (
@@ -78,8 +80,8 @@ const Main = ({ setShowLogin, setShowSignup, setLoggedIn }) => {
 
             {showUpload && (
                 <div>
-                    <button type='button' onClick={upload}>Cancel Upload</button>
-                    <Upload />
+                    {/* <button type='button' onClick={upload}>Cancel Upload</button> */}
+                    <Upload setShowUpload={setShowUpload}/>
                 </div>
             )}
 

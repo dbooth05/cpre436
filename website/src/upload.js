@@ -1,7 +1,7 @@
 import React, { useState, useContext, useRef } from 'react';
 import { AccountContext } from './App';
 
-const Upload = () => {
+const Upload = ({ setShowUpload }) => {
 
     const { accountId, setAccountId } = useContext(AccountContext);
 
@@ -30,8 +30,14 @@ const Upload = () => {
         }
     };
 
+    const cancelUpload = () => {
+        setShowUpload(false);
+    }
+
     return (
         <div>
+            <button type='button' onClick={cancelUpload}>Cancel Upload</button>
+
             <input type="file" ref={fileInput} />
             <button onClick={uploadImage}>Upload</button>
         </div>
