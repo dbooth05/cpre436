@@ -12,7 +12,7 @@ const Login = ({ setShowLogin, setShowSignup, setLoggedIn }) => {
         
         event.preventDefault();
 
-        const url = 'http://localhost:8080/accounts/login';
+        const url = 'http://104.190.100.80:80/accounts/login';
 
         const data = {
             "name":username,
