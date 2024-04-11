@@ -14,5 +14,10 @@ public class Cors implements WebMvcConfigurer {
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true);
+        registry.addMapping("/**")
+                .allowedOrigins("http://104.190.100.80")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS")
+                .allowedHeaders("*")
+                .allowCredentials(true);
     }
 }
