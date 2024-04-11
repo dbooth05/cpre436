@@ -43,9 +43,13 @@ public class PictureController {
             pic.setUserID(Integer.parseInt(userID));
             pic.setUploaded(LocalDateTime.now());
             pic.setImgPath(path.toString());
-            pictureRepo.save(pic);
 
-            return ResponseEntity.ok("File uploaded successfully");
+            try {
+                pictureRepo.save(pic);
+                return ResponseEntity.ok("File uploaded and picture saved successfully");
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to save picture");
+            }
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload file");
         }
