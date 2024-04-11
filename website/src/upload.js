@@ -14,7 +14,7 @@ const Upload = ({ setShowUpload }) => {
         formData.append('userId', accountId); // replace with actual user ID
 
         try {
-            const response = await fetch('http://104.190.100.80:80/upload', { // replace with your server URL
+            const response = await fetch('http://104.190.100.80/upload', { // replace with your server URL
                 method: 'POST',
                 body: formData
             });

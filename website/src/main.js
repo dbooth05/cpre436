@@ -11,7 +11,7 @@ const Main = ({ setShowLogin, setShowSignup, setLoggedIn }) => {
 
     async function loadImages(event) {
 
-        const url = 'http://104.190.100.80:80/pictures';
+        const url = 'http://104.190.100.80/pictures';
 
         const data = {
             "author": [],

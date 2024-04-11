@@ -13,7 +13,7 @@ const Signup = ({ setShowLogin, setShowSignup, setLoggedIn }) => {
 
         event.preventDefault();
 
-        const url = 'http://104.190.100.80:80/accounts/signup';
+        const url = 'http://104.190.100.80/accounts/signup';
 
         const data = {
             "name":username,
