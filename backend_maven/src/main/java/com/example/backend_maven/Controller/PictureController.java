@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/pictures")
-@CrossOrigin(origins="http://104.190.100.80")
+@CrossOrigin(origins = {"http://localhost:3000", "http://104.190.100.80"})
 public class PictureController {
 
     private PictureRepo pictureRepo;

@@ -9,11 +9,12 @@ const Signup = ({ setShowLogin, setShowSignup, setLoggedIn }) => {
 
     const { accountId, setAccountId } = useContext(AccountContext);
 
+    // const url = 'http://104.190.100.80/accounts/signup';
+    const url = 'http://localhost:3000/accounts/signup';
+
     const handleSubmit = async (event) => {
 
         event.preventDefault();
-
-        const url = 'http://104.190.100.80/accounts/signup';
 
         const data = {
             "name":username,

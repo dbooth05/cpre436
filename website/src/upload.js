@@ -7,6 +7,9 @@ const Upload = ({ setShowUpload }) => {
 
     const fileInput = useRef();
 
+    // const url = 'http://104.190.100.80/pictures/upload';
+    const url = 'http://localhost:3000/pictures/upload';
+
     const uploadImage = async () => {
         const file = fileInput.current.files[0];
         const formData = new FormData();
@@ -14,7 +17,7 @@ const Upload = ({ setShowUpload }) => {
         formData.append('userID', accountId);
 
         try {
-            const response = await fetch('http://104.190.100.80/pictures/upload', { // replace with your server URL
+            const response = await fetch(url, { // replace with your server URL
                 method: 'POST',
                 body: formData
             });

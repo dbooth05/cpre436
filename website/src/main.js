@@ -9,9 +9,10 @@ const Main = ({ setShowLogin, setShowSignup, setLoggedIn }) => {
 
     const [showUpload, setShowUpload] = useState(false);
 
-    async function loadImages(event) {
+    // const url = 'http://104.190.100.80/pictures';
+    const url = 'http://localhost:3000/pictures';
 
-        const url = 'http://104.190.100.80/pictures';
+    async function loadImages(event) {
 
         const data = {
             "author": [],

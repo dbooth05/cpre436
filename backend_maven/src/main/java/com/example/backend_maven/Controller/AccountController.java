@@ -14,7 +14,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/accounts")
-@CrossOrigin(origins="http://104.190.100.80")
+@CrossOrigin(origins = {"http://localhost:3000", "http://104.190.100.80"})
 public class AccountController {
 
     private AccountRepo accRepo;
