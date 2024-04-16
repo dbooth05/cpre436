@@ -2,7 +2,9 @@ package com.example.backend_maven.Controller;
 
 import com.example.backend_maven.Model.Picture;
 import com.example.backend_maven.Repo.PictureRepo;
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +16,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.List;
+
+import static org.springframework.transaction.support.TransactionSynchronizationManager.getResource;
 
 @RestController
 @RequestMapping("/pictures")
@@ -30,6 +34,12 @@ public class PictureController {
     @GetMapping
     public List<Picture> getPictures() {
         return pictureRepo.findAll();
+    }
+
+    @GetMapping("/{filename:.+}")
+    public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
+        Resource file = (Resource) getResource("file:/var/www/uploads/" + filename);
+        return ResponseEntity.ok().body(file);
     }
 
     @PostMapping("/upload")
