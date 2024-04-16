@@ -2,22 +2,21 @@ package com.example.backend_maven.Controller;
 
 import com.example.backend_maven.Model.Picture;
 import com.example.backend_maven.Repo.PictureRepo;
-import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ResourceLoader;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.List;
-
-import static org.springframework.transaction.support.TransactionSynchronizationManager.getResource;
 
 @RestController
 @RequestMapping("/pictures")
@@ -38,21 +37,30 @@ public class PictureController {
 
     @GetMapping("/{filename:.+}")
     public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
-        Resource file = (Resource) getResource("file:/var/www/uploads/" + filename);
-        return ResponseEntity.ok().body(file);
+        Path file = Paths.get("/var/www/uploads", filename);
+        Resource resource = null;
+        try {
+            resource = new UrlResource(file.toUri());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok().body(resource);
     }
 
     @PostMapping("/upload")
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile img, @RequestParam("userID") String userID) {
         try {
             byte[] bytes = img.getBytes();
-            Path path = Paths.get("/var/www/uploads/" + img.getOriginalFilename());
+            Path path = Paths.get("/public" + img.getOriginalFilename());
             Files.write(path, bytes);
 
             Picture pic = new Picture();
             pic.setUserID(Integer.parseInt(userID));
             pic.setUploaded(LocalDateTime.now());
             pic.setImgPath(path.toString());
+            pic.setImgName(img.getOriginalFilename());
 
             try {
                 pictureRepo.save(pic);
