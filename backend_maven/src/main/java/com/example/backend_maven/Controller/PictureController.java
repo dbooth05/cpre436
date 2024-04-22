@@ -36,14 +36,14 @@ public class PictureController {
     }
 
     @GetMapping("/{filename:.+}")
-    public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
+    public ResponseEntity<?> serveFile(@PathVariable String filename) {
         Resource resource = null;
         try {
             String home = System.getProperty("user.home");
             resource = new UrlResource(home + "/uploads/" + filename);
             return ResponseEntity.ok().body(resource);
         } catch (MalformedURLException e) {
-            return ResponseEntity.internalServerError().body(resource);
+            return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }
 
