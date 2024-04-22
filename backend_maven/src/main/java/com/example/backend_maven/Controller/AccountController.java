@@ -34,8 +34,8 @@ public class AccountController {
     }
 
     @GetMapping("/{id}")
-    public String getUsername(@PathVariable String id) {
-        Optional<Account> acc = accRepo.findById(Integer.parseInt(id));
+    public String getUsername(@PathVariable int id) {
+        Optional<Account> acc = accRepo.findById(id);
         if (acc.isPresent()) {
             return acc.get().getName();
         } else {
