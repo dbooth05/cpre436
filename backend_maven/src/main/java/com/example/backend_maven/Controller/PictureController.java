@@ -40,7 +40,7 @@ public class PictureController {
         Resource resource = null;
         try {
             String home = System.getProperty("user.home");
-            resource = new UrlResource(home + "/uploads/" + filename);
+            resource = new UrlResource("file:" + home + "/uploads/" + filename);
             return ResponseEntity.ok().body(resource);
         } catch (MalformedURLException e) {
             return ResponseEntity.internalServerError().body(e.getMessage());
