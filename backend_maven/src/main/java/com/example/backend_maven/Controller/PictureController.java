@@ -50,14 +50,15 @@ public class PictureController {
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile img, @RequestParam("userID") String userID) {
         try {
             byte[] bytes = img.getBytes();
-            Path path = Paths.get("src/main/resources/static/images/" + img.getOriginalFilename());
+            String filename = img.getOriginalFilename();
+            Path path = Paths.get("src/main/resources/static/images/" + filename);
             Files.write(path, bytes);
 
             Picture pic = new Picture();
             pic.setUserID(Integer.parseInt(userID));
             pic.setUploaded(LocalDateTime.now());
             pic.setImgPath(path.toString());
-            pic.setImgName(img.getOriginalFilename());
+            pic.setImgName(filename);
 
             try {
                 pictureRepo.save(pic);
@@ -66,7 +67,7 @@ public class PictureController {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to save picture");
             }
         } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload file");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload file\n " + e.toString());
         }
     }
 
