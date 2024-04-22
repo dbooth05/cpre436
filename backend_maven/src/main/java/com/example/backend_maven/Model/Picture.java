@@ -19,8 +19,6 @@ public class Picture {
 
     private LocalDateTime uploaded;
 
-    private String imgPath;
-
     public int getImgID() { return imgID; }
 
     public String getImgName() { return imgName; }
@@ -29,9 +27,6 @@ public class Picture {
 
     public LocalDateTime getUploaded() { return uploaded; }
 
-    public String getImgPath() { return imgPath; }
-
-
     public void setImgID(int imgID) { this.imgID = imgID; }
 
     public void setImgName(String imgName) { this.imgName = imgName; }
@@ -39,7 +34,5 @@ public class Picture {
     public void setUserID(int userID) { this.userID = userID; }
 
     public void setUploaded(LocalDateTime uploaded) { this.uploaded = uploaded; }
-
-    public void setImgPath(String imgPath) { this.imgPath = imgPath; }
 
 }

@@ -59,7 +59,6 @@ public class PictureController {
             Picture pic = new Picture();
             pic.setUserID(Integer.parseInt(userID));
             pic.setUploaded(LocalDateTime.now());
-            pic.setImgPath(path.toString());
             pic.setImgName(filename);
 
             try {

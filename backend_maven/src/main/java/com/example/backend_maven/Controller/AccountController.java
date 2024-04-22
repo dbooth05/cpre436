@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/accounts")
@@ -29,6 +31,16 @@ public class AccountController {
     @GetMapping
     public List<Account> getAccounts() {
         return accRepo.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public String getUsername(@PathVariable String id) {
+        Optional<Account> acc = accRepo.findById(Integer.parseInt(id));
+        if (acc.isPresent()) {
+            return acc.get().getName();
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found");
+        }
     }
 
     /**
