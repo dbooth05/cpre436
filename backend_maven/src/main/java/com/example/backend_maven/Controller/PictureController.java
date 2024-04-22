@@ -37,23 +37,20 @@ public class PictureController {
 
     @GetMapping("/{filename:.+}")
     public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
-        Path file = Paths.get("/var/www/uploads", filename);
         Resource resource = null;
         try {
-            resource = new UrlResource(file.toUri());
+            resource = new UrlResource("file:src/main/resources/static/images/" + filename);
+            return ResponseEntity.ok().body(resource);
         } catch (MalformedURLException e) {
-            e.printStackTrace();
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.internalServerError().body(resource);
         }
-
-        return ResponseEntity.ok().body(resource);
     }
 
     @PostMapping("/upload")
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile img, @RequestParam("userID") String userID) {
         try {
             byte[] bytes = img.getBytes();
-            Path path = Paths.get("/public" + img.getOriginalFilename());
+            Path path = Paths.get("src/main/resources/static/images/" + img.getOriginalFilename());
             Files.write(path, bytes);
 
             Picture pic = new Picture();
