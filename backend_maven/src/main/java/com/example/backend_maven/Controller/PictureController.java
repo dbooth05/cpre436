@@ -39,7 +39,8 @@ public class PictureController {
     public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
         Resource resource = null;
         try {
-            resource = new UrlResource("file:src/main/resources/static/images/" + filename);
+            String home = System.getProperty("user.home");
+            resource = new UrlResource(home + "/images/" + filename);
             return ResponseEntity.ok().body(resource);
         } catch (MalformedURLException e) {
             return ResponseEntity.internalServerError().body(resource);
@@ -51,7 +52,8 @@ public class PictureController {
         try {
             byte[] bytes = img.getBytes();
             String filename = img.getOriginalFilename();
-            Path path = Paths.get("src/main/resources/static/images/" + filename);
+            String home = System.getProperty("user.home");
+            Path path = Paths.get(home + "/uploads/" + filename);
             Files.write(path, bytes);
 
             Picture pic = new Picture();
