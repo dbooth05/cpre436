@@ -6,31 +6,30 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import Login from './login';
 import Signup from './signup';
 import Main from './main';
+import Upload from './upload';
 
 export const AccountContext = createContext();
 
 const App = () => {
 
+    const [viewer, setViewer] = useState(0);
+
     const [accountId, setAccountId] = useState(null);
-    const [loggedIn, setLoggedIn] = useState(false);
-    const [showLogin, setShowLogin] = useState(false);
-    const [showSignup, setShowSignup] = useState(false);
 
     const login = () => {
-        setShowLogin(!showLogin);
+        setViewer(1);
     }
 
     return (
 
         <AccountContext.Provider value={{ accountId, setAccountId }}>
 
-            <Router>
                 <header>
                     <h1>Photoshare</h1>
                     <h2>Class: PHOTO  436X</h2>
                 </header>
 
-                {!showLogin && !loggedIn && (
+                {viewer === 0 && (
                     <div>
                         <h2>Welcome to Photoshare</h2>
                         <p>Please Login to access class: PHOTO 436X</p>
@@ -39,26 +38,25 @@ const App = () => {
                     </div>
                 )}
 
-                {/* Show login page */}
-                {showLogin && (
-                    <Login setShowLogin={setShowLogin} setShowSignup={setShowSignup} setLoggedIn={setLoggedIn} />
-                )}
-                
-                {/* Show signup page */}
-                {showSignup && (
-                    <Signup setShowLogin={setShowLogin} setShowSignup={setShowSignup} setLoggedIn={setLoggedIn} />
+                {viewer === 1 && (
+                    <Login setViewer={setViewer} />
                 )}
 
-                {/* Show main content page */}
-                {loggedIn && (
-                    <Main setShowLogin={setShowLogin} setShowSignup={setShowSignup} setLoggedIn={setLoggedIn} />
+                {viewer === 2 && (
+                    <Signup setViewer={setViewer} />
+                )}
+
+                {viewer === 3 && (
+                    <Main setViewer={setViewer} />
+                )}
+
+                {viewer === 4 && (
+                    <Upload setViewer={setViewer} />
                 )}
 
                 <footer>
                     <p>&copy; CPRE 436X - dbooth05 2024</p>
                 </footer>
-
-        </Router>
 
       </AccountContext.Provider>
 

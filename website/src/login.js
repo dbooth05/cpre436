@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { AccountContext } from './App';
 
-const Login = ({ setShowLogin, setShowSignup, setLoggedIn }) => {
+const Login = ({ setViewer}) => {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -32,8 +32,7 @@ const Login = ({ setShowLogin, setShowSignup, setLoggedIn }) => {
 
         if (response.ok) {
             setAccountId(responseData.id);
-            setShowLogin(false);
-            setLoggedIn(true);
+            setViewer(3);
         } else {
             alert(responseData.message);
         }
@@ -41,12 +40,11 @@ const Login = ({ setShowLogin, setShowSignup, setLoggedIn }) => {
     };
 
     const handleCreate = () => {
-        setShowSignup(true);
-        setShowLogin(false);
+        setViewer(2);
     }
 
     const back = () => {
-        setShowLogin(false);
+        setViewer(0);
     }
 
     return (

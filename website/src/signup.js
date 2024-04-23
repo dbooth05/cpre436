@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { AccountContext } from './App';
 
-const Signup = ({ setShowLogin, setShowSignup, setLoggedIn }) => {
+const Signup = ({ setViewer }) => {
 
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
@@ -34,8 +34,7 @@ const Signup = ({ setShowLogin, setShowSignup, setLoggedIn }) => {
 
         if (response.ok) {
             setAccountId(responseData.id);
-            setShowSignup(false);
-            setLoggedIn(true);
+            setViewer(3);
         } else {
             alert(responseData.message);
         }
@@ -43,8 +42,7 @@ const Signup = ({ setShowLogin, setShowSignup, setLoggedIn }) => {
     };
 
     const handleLogin = () => {
-        setShowLogin(true);
-        setShowSignup(false);
+        setViewer(1);
     }
 
     return (

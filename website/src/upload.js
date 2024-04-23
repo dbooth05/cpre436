@@ -1,7 +1,7 @@
 import React, { useState, useContext, useRef } from 'react';
 import { AccountContext } from './App';
 
-const Upload = ({ setShowUpload }) => {
+const Upload = ({ setViewer }) => {
 
     const { accountId, setAccountId } = useContext(AccountContext);
 
@@ -34,7 +34,7 @@ const Upload = ({ setShowUpload }) => {
     };
 
     const cancelUpload = () => {
-        setShowUpload(false);
+        setViewer(3);
     }
 
     return (
