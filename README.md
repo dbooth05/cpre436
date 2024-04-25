@@ -2,7 +2,7 @@ This is a quickly made React frontend and Springboot backend site for a cyber Se
 
 This site was not explicitly designed to be a secure site. Instead this site's purpose was only
 to serve in the scenario of a Photography class Photoshare site. With time, this site will
-become secure. This is rather ironic for the purpose of class this was made for). 
+become secure. This is rather ironic for the purpose of class this was made for. 
 
 ### Scenario
 You are a broke undergraduate student at Iowa State University studying Cyber Security with a plethora of minors 
