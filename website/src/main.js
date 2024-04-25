@@ -1,8 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { AccountContext } from './App';
 
-import Upload from './upload';
-
 const Main = ({ setViewer }) => {
 
     const { accountId, setAccountId } = useContext(AccountContext);
@@ -11,18 +9,21 @@ const Main = ({ setViewer }) => {
     const [authors, setAuthors] = useState([]);
 
     // const url = 'http://104.190.100.80/pictures';
-    const url = 'http://localhost:3000/pictures';
+    const url = 'http://localhost:8080/pictures';
     // const accurl = 'http://104.190.100.80/accounts/';
     const accurl = 'http://localhost:8080/accounts/'
 
-    async function loadImages(event) {
-
+    const loadImages = async (event) => {
         const response = await fetch(url, {
             method: 'GET',
             headers: {
                 'Content-Type':'application/json'
             }
         });
+
+        if (!response.ok) {
+            throw new Error('Error getting images');
+        }
 
         const responseData = await response.json();
         console.log(responseData);
@@ -35,13 +36,15 @@ const Main = ({ setViewer }) => {
             div.removeChild(div.lastElementChild);
         }  
     };
-
+    
     const logout = () => {
         setAccountId(null);
         setViewer(0);
     };
 
     const upload = () => {
+        setImages([]);
+        setAuthors([]); 
         setViewer(4);
     }
 
@@ -58,7 +61,7 @@ const Main = ({ setViewer }) => {
         const filename = image.imgName;
 
         const imgurl = url + "/" + filename;
-        return <img src={imgurl} alt={filename} width={200} />
+        return <img className='rounded-md' src={imgurl} alt={filename} width={225} />
     }
 
     const getAuthor = async (userID) => {
@@ -84,21 +87,31 @@ const Main = ({ setViewer }) => {
         }
     }
 
+    const getFormattedDate = (date) => {
+
+        let formatted = `${date.getHours()}:${(date.getMinutes() > 10 ? date.getMinutes() : '0' + date.getMinutes())} - ${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
+        return formatted;
+    };
+
     return (
         <div>
 
-            <button type='button' onClick={logout}>Logout</button>
+            <button className='text-right mt-1 mb-5 bg-gray-700 text-white text-md mr-10 py-1 px-2 transition-colors duration-1000 ease-in-out hover:bg-gray-400 rounded-full' type='button' onClick={logout}>Logout</button>
 
-            <button type='button' onClick={upload}>Upload Image</button>
+            <button className='text-right mt-1 mb-5 bg-gray-700 text-white text-md mr-10 py-1 px-2 transition-colors duration-1000 ease-in-out hover:bg-gray-400 rounded-full' type='button' onClick={upload}>Upload Image</button>
 
-            {/* {loadImages()} */}
-            <div id="imageArea">
-                {images.map((image, index) => {
-                    <div key={index}>
+            <div className='flex flex-wrap' id="imageArea">
+                {images.map((image, index) => (
+                    <div className='bg-slate-100 border-2 border-gray-700 rounded-xl p-4 m-5 w-64 transition duration-500 ease-in-out transform hover:shadow-2xl shadow-black' key={index}>
                         {loadImage(image)}
-                        <p>Author: {authors[image.userID]}</p>
+                        <p className='item-center text-center pt-4'>
+                            Author: {authors[image.userID]}
+                        </p>
+                        <p className='items-center text-center'>
+                            {getFormattedDate(new Date(image.uploaded))}
+                        </p>
                     </div>
-                })}
+                ))}
             </div>
         </div>
     );
